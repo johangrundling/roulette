@@ -4,26 +4,20 @@ import org.apache.commons.lang3.RandomUtils;
 import org.games.dto.Bet;
 import org.games.dto.Player;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class Roulette {
 
+    private List<Player> players = new ArrayList<>();
+
+    private List<Bet> bets = new ArrayList<>();
+
+
     public Roulette() {
         System.out.println("Starting roulette");
-
-        Player p = Player.builder()
-                .name("test")
-                .build();
-
-        Bet b = Bet.builder()
-                .player(p)
-                .amount(23D)
-                .amountWon(34.3D)
-                .build();
-
-        System.out.println(" player " + p);
-        System.out.println(" bet " + b);
-
         new Thread(this.new Wheel()).start();
     }
 
@@ -45,10 +39,12 @@ public class Roulette {
 
     public class Wheel implements Runnable {
 
+        private static final long SPIN_DELAY = 30000;
+
         @lombok.SneakyThrows
         public void run() {
             while (true) {
-                Thread.sleep(1000);
+                Thread.sleep(SPIN_DELAY);
                 System.out.println("test ..." + RandomUtils.nextInt(1,36));
             }
         }

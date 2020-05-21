@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -13,10 +15,10 @@ public class Bet {
 
     private Player player;
 
-    private double amount;
+    private BigDecimal amount;
 
-    private double amountWon;
+    private BigDecimal amountWon;
 
-    private String betType;
+    private BetType betType;
 
 }
