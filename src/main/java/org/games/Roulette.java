@@ -52,6 +52,7 @@ public class Roulette {
         System.out.println("-----------------");
         bets.forEach(b -> {
             b.process(number);
+            b.reciept();
         });
 
         bets.clear();
