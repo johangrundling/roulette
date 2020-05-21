@@ -29,7 +29,7 @@ public class Roulette {
             String input = stdin.nextLine();
 
             if (input.equalsIgnoreCase("x")) {
-                exit();
+                shutdown();
             } else if (StringUtils.startsWith(input, "register")) {
                 registerPlayer(input);
             } else if (StringUtils.startsWith(input, "remove")) {
@@ -44,8 +44,16 @@ public class Roulette {
         }
     }
 
-    private void exit() {
+    private void shutdown() {
         System.exit(0);
+    }
+
+    private void loadPlayerInfo(){
+
+    }
+
+    private void savePlayerInfo(){
+
     }
 
     private void registerPlayer(String playerInfo) {
