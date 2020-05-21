@@ -21,7 +21,7 @@ public class Bet {
 
     private BetType betType;
 
-    private int bet;
+    private int numberBetOn;
 
     private boolean even;
 
@@ -31,7 +31,7 @@ public class Bet {
         if (betType == BetType.ODD_EVEN) {
             result = number % 2 == 0;
         } else {
-            result = bet == number;
+            result = numberBetOn == number;
         }
 
         if (result) {
@@ -50,7 +50,20 @@ public class Bet {
 
 
     public void info(){
-        System.out.println(" " + player.getName() + " " + amountBet + " " + amountWon + " " + betType);
+        StringBuilder info = new StringBuilder(" - ");
+        info.append(player.getName())
+                .append(", amount bet:")
+                .append(amountBet)
+                .append(", bet on: ");
+
+        if(betType == BetType.NUMBER){
+             info.append(numberBetOn);
+        }else{
+            info.append(even? "even" : "odd");
+        }
+
+
+        System.out.println(info.toString());
     }
 
 }
