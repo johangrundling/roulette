@@ -1,6 +1,7 @@
 package org.games;
 
 import org.apache.commons.lang3.RandomUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.games.dto.Bet;
 import org.games.dto.Player;
 
@@ -25,9 +26,15 @@ public class Roulette {
         Scanner stdin = new Scanner(System.in);
         while (true) {
             String input = stdin.nextLine();
-            System.out.println("test bet " + input);
+
             if (input.equalsIgnoreCase("x")) {
                 System.exit(0);
+            } else if (StringUtils.startsWith(input, "register")){
+                System.out.println("add new player");
+            } else if (StringUtils.startsWith(input, "remove")){
+                System.out.println("remove player");
+            } else {
+                System.out.println("bet ");
             }
         }
     }
