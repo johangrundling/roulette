@@ -10,6 +10,6 @@ public enum BetType {
     ODD_EVEN(2);
 
     @Getter
-    private int winRatio;
+    private int winFactor;
 
 }
