@@ -20,6 +20,7 @@ public class Roulette {
 
     public Roulette() {
         System.out.println("Starting roulette");
+        loadPlayerInfo();
         new Thread(this.new Wheel()).start();
     }
 
@@ -45,6 +46,7 @@ public class Roulette {
     }
 
     private void shutdown() {
+        savePlayerInfo();
         System.exit(0);
     }
 
