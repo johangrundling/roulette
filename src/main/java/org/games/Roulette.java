@@ -72,7 +72,11 @@ public class Roulette {
     }
 
     private void registerPlayer(String playerInfo) {
-        String playerName = StringUtils.trim(StringUtils.removeStart(playerInfo, "register"));
+        String playerName = StringUtils.replace(
+                StringUtils.trim(StringUtils.removeStart(playerInfo, "register")),
+                " ",
+                "_"
+        );
         if (!StringUtils.isEmpty(playerName)) {
             players.add(Player.builder()
                     .name(playerName)
@@ -82,7 +86,11 @@ public class Roulette {
     }
 
     private void removePlayer(String playerInfo) {
-        String playerName = StringUtils.trim(StringUtils.removeStart(playerInfo, "remove"));
+        String playerName = StringUtils.replace(
+                StringUtils.trim(StringUtils.removeStart(playerInfo, "remove")),
+                " ",
+                "_"
+        );
         Player search = Player.builder().name(playerName).build();
         players.remove(search);
     }
@@ -104,7 +112,7 @@ public class Roulette {
                     .name(betdata[0])
                     .build()));
 
-            if(player ==null){
+            if (player == null) {
                 System.out.println(" Unknown player " + betdata[0]);
                 return;
             }
