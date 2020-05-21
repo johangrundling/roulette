@@ -44,25 +44,34 @@ public class Bet {
         player.processBet(amountBet, amountWon);
     }
 
-    public void receipt(){
-        System.out.println(" " + player.getName() + " " + amountBet + " " + amountWon);
-    }
 
-
-    public void info(){
+    private String baseInfo() {
         StringBuilder info = new StringBuilder(" - ");
         info.append(player.getName())
                 .append(", amount bet:")
                 .append(amountBet)
                 .append(", bet on: ");
 
-        if(betType == BetType.NUMBER){
-             info.append(numberBetOn);
-        }else{
-            info.append(even? "even" : "odd");
+        if (betType == BetType.NUMBER) {
+            info.append(numberBetOn);
+        } else {
+            info.append(even ? "even" : "odd");
         }
+        return info.toString();
+    }
 
+    public void info() {
+        System.out.println(baseInfo());
+    }
 
+    public void receipt() {
+        StringBuilder info = new StringBuilder(baseInfo());
+        info.append(", result ")
+                .append(result ? " Won" : "Lost");
+        if (result) {
+            info.append(", amount won: ")
+                    .append(amountWon);
+        }
         System.out.println(info.toString());
     }
 
