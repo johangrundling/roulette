@@ -44,7 +44,7 @@ public class Bet {
         player.processBet(amountBet, amountWon);
     }
 
-    public void reciept(){
+    public void receipt(){
         System.out.println(" " + player.getName() + " " + amountBet + " " + amountWon);
     }
 
