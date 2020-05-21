@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.games.dto.Bet;
 import org.games.dto.Player;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,17 +29,44 @@ public class Roulette {
             String input = stdin.nextLine();
 
             if (input.equalsIgnoreCase("x")) {
-                System.exit(0);
-            } else if (StringUtils.startsWith(input, "register")){
-                System.out.println("add new player");
-            } else if (StringUtils.startsWith(input, "remove")){
-                System.out.println("remove player");
+                exit();
+            } else if (StringUtils.startsWith(input, "register")) {
+                registerPlayer(input);
+            } else if (StringUtils.startsWith(input, "remove")) {
+                removePlayer(input);
+            } else if (StringUtils.startsWith(input, "info")) {
+                displayPlayerInfo();
+            } else if (StringUtils.startsWith(input, "bets")) {
+                displayBets();
             } else {
-                System.out.println("bet ");
+                placeBet(input);
             }
         }
     }
 
+    private void exit() {
+        System.exit(0);
+    }
+
+    private void registerPlayer(String playerInfo) {
+        System.out.println(playerInfo);
+    }
+
+    private void removePlayer(String playerInfo) {
+        System.out.println(playerInfo);
+    }
+
+    private void displayPlayerInfo() {
+        players.forEach(p -> p.info());
+    }
+
+    private void displayBets() {
+        bets.forEach(b -> b.info());
+    }
+
+    private void placeBet(String bet) {
+        System.out.println(bet);
+    }
 
     public static void main(String[] args) {
         new Roulette().play();
@@ -52,7 +80,7 @@ public class Roulette {
         public void run() {
             while (true) {
                 Thread.sleep(SPIN_DELAY);
-                System.out.println("test ..." + RandomUtils.nextInt(1,36));
+                System.out.println("test ..." + RandomUtils.nextInt(1, 36));
             }
         }
     }

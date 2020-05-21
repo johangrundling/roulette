@@ -15,10 +15,14 @@ public class Bet {
 
     private Player player;
 
-    private BigDecimal amount;
+    private BigDecimal amountBet;
 
     private BigDecimal amountWon;
 
     private BetType betType;
+
+    public void info(){
+        System.out.println(" " + player.getName() + " " + amountBet + " " + amountWon + " " + betType);
+    }
 
 }

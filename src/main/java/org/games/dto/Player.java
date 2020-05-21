@@ -20,4 +20,8 @@ public class Player {
 
     private BigDecimal totalAmountWon = BigDecimal.ZERO;
 
+    public void info() {
+        System.out.println(name + " " + totalAmountBet + " " + totalAmountWon);
+    }
+
 }
