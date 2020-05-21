@@ -1,0 +1,46 @@
+# IntelliJ
+/out/
+.idea/
+*.iml
+*.iws
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+#Maven
+target/
+/build/
+
+# Front-end build
+dist/
+
+dependency-reduced-pom.xml
+config_developer.yml
+
+# Visual Studio Code (with Java plugin)
+.vscode/
+.settings/
+.project
+.classpath
+
+# Node, NPM, Etc
+node_modules/
+bower_components/
+
+# OS, Temp files, etc
+.DS_Store
+*~
+tmp/
+
+# Misc
+*.log
+.tmp
