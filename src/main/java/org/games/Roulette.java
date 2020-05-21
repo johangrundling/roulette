@@ -59,11 +59,18 @@ public class Roulette {
     }
 
     private void registerPlayer(String playerInfo) {
-        System.out.println(playerInfo);
+        String playerName = StringUtils.trim(StringUtils.removeStart(playerInfo, "register"));
+        if(!StringUtils.isEmpty(playerName)) {
+            players.add(Player.builder()
+                    .name(playerName)
+                    .build());
+        }
     }
 
     private void removePlayer(String playerInfo) {
-        System.out.println(playerInfo);
+        String playerName = StringUtils.trim(StringUtils.removeStart(playerInfo, "remove"));
+        Player search = Player.builder().name(playerName).build();
+        players.remove(search);
     }
 
     private void displayPlayerInfo() {
