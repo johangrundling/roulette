@@ -9,15 +9,20 @@ public class Roulette {
         new Thread(this.new Wheel()).start();
     }
 
-    public void play(){
+    public void play() {
         Scanner stdin = new Scanner(System.in);
-        String input = stdin.nextLine();
-        System.out.println("test bet " + input);
+        while (true) {
+            String input = stdin.nextLine();
+            System.out.println("test bet " + input);
+            if (input.equalsIgnoreCase("x")) {
+                System.exit(0);
+            }
+        }
     }
 
 
-    public static void main(String [] args){
-         new Roulette().play();
+    public static void main(String[] args) {
+        new Roulette().play();
     }
 
     public class Wheel implements Runnable {
