@@ -1,5 +1,7 @@
 package org.games;
 
+import org.apache.commons.lang3.RandomUtils;
+
 import java.util.Scanner;
 
 public class Roulette {
@@ -31,7 +33,7 @@ public class Roulette {
         public void run() {
             while (true) {
                 Thread.sleep(1000);
-                System.out.println("test ...");
+                System.out.println("test ..." + RandomUtils.nextInt(1,36));
             }
         }
     }
