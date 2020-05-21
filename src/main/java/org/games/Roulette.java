@@ -2,6 +2,7 @@ package org.games;
 
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.games.dto.Bet;
 import org.games.dto.BetType;
 import org.games.dto.Player;
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Roulette {
@@ -103,11 +105,24 @@ public class Roulette {
         bets.forEach(b -> b.info());
     }
 
+    private Player findByQuickCode(int quickCode){
+        Optional<Player> op = players.stream().filter(p->p.getQuickCode() == quickCode).findFirst();
+        if(op.isPresent()){
+            return op.get();
+        }
+        return null;
+    }
+
     private void placeBet(String bet) {
         String[] betdata = bet.split(" ");
+
         if (betdata.length == 3) {
 
-            Player player = players.get(players.indexOf(Player
+            System.out.println(betdata[0]);
+
+            Player player = NumberUtils.isDigits(betdata[0])?
+                    findByQuickCode(Integer.valueOf(betdata[0]))
+                    :players.get(players.indexOf(Player
                     .builder()
                     .name(betdata[0])
                     .build()));
@@ -117,10 +132,7 @@ public class Roulette {
                 return;
             }
 
-            bets.add(Bet.builder().player(players.get(players.indexOf(Player
-                    .builder()
-                    .name(betdata[0])
-                    .build())))
+            bets.add(Bet.builder().player(player)
                     .betType(BetType.NUMBER)
                     .amountBet(BigDecimal.TEN)
                     .build());
