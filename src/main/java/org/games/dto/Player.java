@@ -25,6 +25,8 @@ public class Player {
     @EqualsAndHashCode.Exclude
     private BigDecimal totalAmountWon = BigDecimal.ZERO;
 
+    private int quickCode;
+
     public void processBet(BigDecimal amountBet, BigDecimal amountWon) {
         totalAmountBet = totalAmountBet.add(amountBet);
         totalAmountWon = totalAmountWon.add(amountWon);

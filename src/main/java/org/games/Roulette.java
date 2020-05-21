@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.games.dto.Bet;
 import org.games.dto.BetType;
 import org.games.dto.Player;
+import org.games.dto.PlayerQuickSearchCode;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -74,6 +75,7 @@ public class Roulette {
         if (!StringUtils.isEmpty(playerName)) {
             players.add(Player.builder()
                     .name(playerName)
+                    .quickCode(PlayerQuickSearchCode.generateQuickCode())
                     .build());
         }
     }
