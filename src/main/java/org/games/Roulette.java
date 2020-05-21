@@ -3,6 +3,7 @@ package org.games;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.games.dto.Bet;
+import org.games.dto.BetType;
 import org.games.dto.Player;
 
 import java.math.BigDecimal;
@@ -50,17 +51,17 @@ public class Roulette {
         System.exit(0);
     }
 
-    private void loadPlayerInfo(){
+    private void loadPlayerInfo() {
 
     }
 
-    private void savePlayerInfo(){
+    private void savePlayerInfo() {
 
     }
 
     private void registerPlayer(String playerInfo) {
         String playerName = StringUtils.trim(StringUtils.removeStart(playerInfo, "register"));
-        if(!StringUtils.isEmpty(playerName)) {
+        if (!StringUtils.isEmpty(playerName)) {
             players.add(Player.builder()
                     .name(playerName)
                     .build());
@@ -82,7 +83,27 @@ public class Roulette {
     }
 
     private void placeBet(String bet) {
-        System.out.println(bet);
+        String[] betdata = bet.split(" ");
+        if (betdata.length == 3) {
+
+            Player player = players.get(players.indexOf(Player
+                    .builder()
+                    .name(betdata[0])
+                    .build()));
+
+            if(player ==null){
+                System.out.println(" Unknown player " + betdata[0]);
+                return;
+            }
+
+            bets.add(Bet.builder().player(players.get(players.indexOf(Player
+                    .builder()
+                    .name(betdata[0])
+                    .build())))
+                    .betType(BetType.NUMBER)
+                    .amountBet(BigDecimal.TEN)
+                    .build());
+        }
     }
 
     public static void main(String[] args) {
