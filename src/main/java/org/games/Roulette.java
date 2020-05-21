@@ -1,5 +1,7 @@
 package org.games;
 
+import java.util.Scanner;
+
 public class Roulette {
 
     public Roulette() {
@@ -7,8 +9,15 @@ public class Roulette {
         new Thread(this.new Wheel()).start();
     }
 
+    public void play(){
+        Scanner stdin = new Scanner(System.in);
+        String input = stdin.nextLine();
+        System.out.println("test bet " + input);
+    }
+
+
     public static void main(String [] args){
-         new Roulette();
+         new Roulette().play();
     }
 
     public class Wheel implements Runnable {
