@@ -46,6 +46,16 @@ public class Roulette {
         }
     }
 
+    private void processSpin(final int number) {
+        System.out.println("Number " + number);
+        System.out.println("-----------------");
+        bets.forEach(b -> {
+            b.info();
+        });
+
+        bets.clear();
+    }
+
     private void shutdown() {
         savePlayerInfo();
         System.exit(0);
@@ -118,7 +128,7 @@ public class Roulette {
         public void run() {
             while (true) {
                 Thread.sleep(SPIN_DELAY);
-                System.out.println("test ..." + RandomUtils.nextInt(1, 36));
+                processSpin(RandomUtils.nextInt(1, 36));
             }
         }
     }
