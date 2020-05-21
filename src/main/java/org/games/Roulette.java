@@ -50,7 +50,7 @@ public class Roulette {
         System.out.println("Number " + number);
         System.out.println("-----------------");
         bets.forEach(b -> {
-            b.info();
+            b.process(number);
         });
 
         bets.clear();

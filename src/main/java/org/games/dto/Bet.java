@@ -21,6 +21,30 @@ public class Bet {
 
     private BetType betType;
 
+    private int bet;
+
+    private boolean even;
+
+    private boolean result;
+
+    public void process(int number) {
+        if (betType == BetType.ODD_EVEN) {
+            result = number % 2 == 0;
+        } else {
+            result = bet == number;
+        }
+
+        if (result) {
+            amountWon = amountBet.multiply(
+                    BigDecimal.valueOf(betType.getWinFactor()));
+        } else {
+            amountWon = BigDecimal.ZERO;
+        }
+
+        player.processBet(amountBet, amountWon);
+    }
+
+
     public void info(){
         System.out.println(" " + player.getName() + " " + amountBet + " " + amountWon + " " + betType);
     }

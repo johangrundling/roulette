@@ -12,13 +12,23 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class Player {
 
     private String name;
 
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
     private BigDecimal totalAmountBet = BigDecimal.ZERO;
 
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
     private BigDecimal totalAmountWon = BigDecimal.ZERO;
+
+    public void processBet(BigDecimal amountBet, BigDecimal amountWon) {
+        totalAmountBet = totalAmountBet.add(amountBet);
+        totalAmountWon = totalAmountWon.add(amountWon);
+    }
 
     public void info() {
         System.out.println(name + " " + totalAmountBet + " " + totalAmountWon);
