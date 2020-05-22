@@ -12,6 +12,7 @@ import org.games.dto.PlayerQuickSearchCode;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -19,6 +20,7 @@ public class Roulette {
 
     private List<Player> players = new ArrayList<>();
 
+    //this list should be synchronized but that is beyond the scope of this exercise
     private List<Bet> bets = new ArrayList<>();
 
 
@@ -97,11 +99,12 @@ public class Roulette {
 
     private void registerPlayer(String playerInfo) {
 
-        String playerName = StringUtils.replace(
-                StringUtils.trim(StringUtils.removeStart(playerInfo, "register")),
-                " ",
-                "_"
-        );
+        String playerName = extractPlayerName(playerInfo, "register");
+
+        if(!Objects.isNull(findPlayer(playerName))){
+            System.out.println("Player with similar name already exists. Player name: " + playerName);
+            return;
+        }
 
         if (!StringUtils.isEmpty(playerName) && StringUtils.isAlpha(StringUtils.substring(playerName,0,1)) && playerName.length() >= 3) {
             players.add(Player.builder()
@@ -115,13 +118,22 @@ public class Roulette {
     }
 
     private void removePlayer(String playerInfo) {
-        String playerName = StringUtils.replace(
-                StringUtils.trim(StringUtils.removeStart(playerInfo, "remove")),
+        String playerName = extractPlayerName(playerInfo, "remove");
+        Player search = Player.builder().name(playerName).build();
+        boolean result = players.remove(search);
+        if(result){
+            System.out.println("Player " + playerName + " removed");
+        }else{
+            System.out.println("Player " + playerName + " could not be found");
+        }
+    }
+
+    private String extractPlayerName(String input, String remove){
+        return StringUtils.replace(
+                StringUtils.trim(StringUtils.removeStart(input, remove)),
                 " ",
                 "_"
         );
-        Player search = Player.builder().name(playerName).build();
-        players.remove(search);
     }
 
     private void displayPlayerInfo() {
@@ -132,6 +144,13 @@ public class Roulette {
         bets.forEach(b -> b.info());
     }
 
+
+    private Player findPlayer(String info){
+        return NumberUtils.isDigits(info)?
+                findByQuickCode(Integer.valueOf(info))
+                :findByName(info);
+    }
+
     private Player findByQuickCode(int quickCode){
         Optional<Player> op = players.stream().filter(p->p.getQuickCode() == quickCode).findFirst();
         if(op.isPresent()){
@@ -140,21 +159,25 @@ public class Roulette {
         return null;
     }
 
+    private Player findByName(String name){
+        Player search = Player
+                .builder()
+                .name(name)
+                .build();
+        int index = players.indexOf(search);
+        return index<0? null : players.get(index);
+    }
+
+
+
     private void placeBet(String bet) {
         String[] betdata = bet.split(" ");
 
         if (betdata.length == 3) {
 
-            System.out.println(betdata[0]);
+            Player player = findPlayer(betdata[0]);
 
-            Player player = NumberUtils.isDigits(betdata[0])?
-                    findByQuickCode(Integer.valueOf(betdata[0]))
-                    :players.get(players.indexOf(Player
-                    .builder()
-                    .name(betdata[0])
-                    .build()));
-
-            if (player == null) {
+            if (Objects.isNull(player)) {
                 System.out.println(" Unknown player " + betdata[0]);
                 return;
             }
