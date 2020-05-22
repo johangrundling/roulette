@@ -49,7 +49,7 @@ public final class PlayerCSVRepository {
                 x.printStackTrace();
             }
         } else {
-            System.out.println("Players file does not exists. Skippping.");
+            System.out.println("Players file does not exists. Skipping.");
         }
         return players;
     }
