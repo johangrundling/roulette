@@ -35,7 +35,7 @@ public class Roulette {
     public void play() {
         Scanner stdin = new Scanner(System.in);
         while (true) {
-            //System.out.println(" Place your bet: ");
+            System.out.println("\n\nPlace your bet: ");
             String input = stdin.nextLine();
 
             if (input.equalsIgnoreCase("x")) {

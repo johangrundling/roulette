@@ -37,8 +37,9 @@ public class Player {
         System.out.format("%-20s %-7d %10s %10s %n"
                 , name
                 ,quickCode
+                ,totalAmountWon
                 ,totalAmountBet
-                ,totalAmountWon);
+                );
     }
 
 }
