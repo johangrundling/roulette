@@ -3,6 +3,7 @@ package org.games;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.games.csv.PlayerCSVRepository;
 import org.games.dto.Bet;
 import org.games.dto.BetType;
 import org.games.dto.Player;
@@ -65,11 +66,11 @@ public class Roulette {
     }
 
     private void loadPlayerInfo() {
-
+         players = PlayerCSVRepository.readPlayersFile();
     }
 
     private void savePlayerInfo() {
-
+        PlayerCSVRepository.writePlayersFile(players);
     }
 
     private void registerPlayer(String playerInfo) {
