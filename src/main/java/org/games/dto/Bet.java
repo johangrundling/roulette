@@ -29,7 +29,7 @@ public class Bet {
 
     public void process(int number) {
         if (betType == BetType.ODD_EVEN) {
-            result = number % 2 == 0;
+            result = (even && number % 2 == 0);
         } else {
             result = numberBetOn == number;
         }

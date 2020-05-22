@@ -42,7 +42,7 @@ public class Roulette {
                 shutdown();
             } else if (input.equalsIgnoreCase("m")) {
                 displayOptions();
-            }else if (StringUtils.startsWith(input, "register")) {
+            } else if (StringUtils.startsWith(input, "register")) {
                 registerPlayer(input);
             } else if (StringUtils.startsWith(input, "remove")) {
                 removePlayer(input);
@@ -94,7 +94,7 @@ public class Roulette {
     }
 
     private void loadPlayerInfo() {
-         players = PlayerCSVRepository.readPlayersFile();
+        players = PlayerCSVRepository.readPlayersFile();
     }
 
     private void savePlayerInfo() {
@@ -105,21 +105,21 @@ public class Roulette {
 
         String playerName = extractPlayerName(playerInfo, "register");
 
-        if(!Objects.isNull(findPlayer(playerName))){
+        if (!Objects.isNull(findPlayer(playerName))) {
             System.out.println("Player with similar name already exists. Player name: " + playerName);
             return;
         }
 
         if (!StringUtils.isEmpty(playerName)
-                && StringUtils.isAlpha(StringUtils.substring(playerName,0,1))
+                && StringUtils.isAlpha(StringUtils.substring(playerName, 0, 1))
                 && playerName.length() >= 3
                 && playerName.length() <= 20) {
             players.add(Player.builder()
                     .name(playerName)
                     .quickCode(PlayerQuickSearchCode.generateQuickCode())
                     .build());
-            System.out.println("player "+ playerName+ " successfully registered");
-        }else{
+            System.out.println("player " + playerName + " successfully registered");
+        } else {
             System.out.println("The players name must start with a character and must be between 3 and 20 characters long.");
         }
     }
@@ -128,14 +128,14 @@ public class Roulette {
         String playerName = extractPlayerName(playerInfo, "remove");
         Player search = Player.builder().name(playerName).build();
         boolean result = players.remove(search);
-        if(result){
+        if (result) {
             System.out.println("Player " + playerName + " removed");
-        }else{
+        } else {
             System.out.println("Player " + playerName + " could not be found");
         }
     }
 
-    private String extractPlayerName(String input, String remove){
+    private String extractPlayerName(String input, String remove) {
         return StringUtils.replace(
                 StringUtils.trim(StringUtils.removeStart(input, remove)),
                 " ",
@@ -146,9 +146,9 @@ public class Roulette {
     private void displayPlayerInfo() {
         System.out.format("%-20s %-7s %10s %10s %n",
                 "Player"
-        ,"Quick"
-        ,"Tot Won"
-        ,"Tot Bet");
+                , "Quick"
+                , "Tot Won"
+                , "Tot Bet");
         players.forEach(p -> p.info());
     }
 
@@ -157,46 +157,84 @@ public class Roulette {
     }
 
 
-    private Player findPlayer(String info){
-        return NumberUtils.isDigits(info)?
+    private Player findPlayer(String info) {
+        return NumberUtils.isDigits(info) ?
                 findByQuickCode(Integer.valueOf(info))
-                :findByName(info);
+                : findByName(info);
     }
 
-    private Player findByQuickCode(int quickCode){
-        Optional<Player> op = players.stream().filter(p->p.getQuickCode() == quickCode).findFirst();
-        if(op.isPresent()){
+    private Player findByQuickCode(int quickCode) {
+        Optional<Player> op = players.stream().filter(p -> p.getQuickCode() == quickCode).findFirst();
+        if (op.isPresent()) {
             return op.get();
         }
         return null;
     }
 
-    private Player findByName(String name){
+    private Player findByName(String name) {
         Player search = Player
                 .builder()
                 .name(name)
                 .build();
         int index = players.indexOf(search);
-        return index<0? null : players.get(index);
+        return index < 0 ? null : players.get(index);
     }
 
     private void placeBet(String bet) {
         String[] betdata = bet.split(" ");
 
-        if (betdata.length == 3) {
-
-            Player player = findPlayer(betdata[0]);
-
-            if (Objects.isNull(player)) {
-                System.out.println(" Unknown player " + betdata[0]);
-                return;
-            }
-
-            bets.add(Bet.builder().player(player)
-                    .betType(BetType.NUMBER)
-                    .amountBet(BigDecimal.TEN)
-                    .build());
+        if (betdata.length != 3) {
+            System.out.println("Invalid bet information");
+            System.out.println("Usage: <name or quick code of player> <bet on 1-36 , even or odd> <amount wagered>");
+            return;
         }
+
+
+        Player player = findPlayer(betdata[0]);
+
+        if (Objects.isNull(player)) {
+            System.out.println(" Unknown player " + betdata[0]);
+            return;
+        }
+
+        String betOn = betdata[1];
+
+        if ((!NumberUtils.isDigits(betOn) || (NumberUtils.isDigits(betOn)
+                && (Integer.parseInt(betOn) < 1
+                    || Integer.parseInt(betOn) > 36)))
+                && !"even".equalsIgnoreCase(betOn)
+                && !"odd".equalsIgnoreCase(betOn)) {
+            System.out.println("Invalid bet. Valid options: 1-36, even , odd");
+            return;
+        }
+
+        String amount = betdata[2];
+
+        if(!NumberUtils.isCreatable(amount)){
+            System.out.println("Invalid bet. The 3rd value must be an amount");
+            return;
+        }
+
+        BetType type = NumberUtils.isDigits(betOn) ? BetType.NUMBER
+                : BetType.ODD_EVEN;
+
+        int numberBetOn = 0;
+        boolean oddOrEven = false;
+
+        if(type == BetType.NUMBER){
+            numberBetOn = NumberUtils.toInt(betOn);
+        }else{
+            oddOrEven = StringUtils.equalsIgnoreCase(betOn,"even");
+        }
+
+
+        bets.add(Bet.builder().player(player)
+                .betType(type)
+                .numberBetOn(numberBetOn)
+                .even(oddOrEven)
+                .amountBet(NumberUtils.createBigDecimal(amount))
+                .build());
+
     }
 
     public static void main(String[] args) {
@@ -205,7 +243,7 @@ public class Roulette {
 
     public class Wheel implements Runnable {
 
-        private static final long SPIN_DELAY = 30000;
+        private static final long SPIN_DELAY = 30*1000l;
 
         @lombok.SneakyThrows
         public void run() {
