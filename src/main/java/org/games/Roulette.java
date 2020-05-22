@@ -58,13 +58,21 @@ public class Roulette {
 
     private void processSpin(final int number) {
         System.out.println("Number " + number);
-        System.out.println("-----------------");
+        System.out.format("%n%-20s %-7s %10s %10s %n",
+                "Player"
+                , "Bet"
+                , "Outcome"
+                , "Winnings");
+        System.out.println("------");
+
         bets.forEach(b -> {
             b.process(number);
             b.receipt();
         });
 
         bets.clear();
+
+        displayPlayerInfo();
     }
 
     private void displayOptions() {
@@ -144,15 +152,21 @@ public class Roulette {
     }
 
     private void displayPlayerInfo() {
-        System.out.format("%-20s %-7s %10s %10s %n",
+        System.out.format("%n%-20s %-7s %10s %10s %n",
                 "Player"
                 , "Quick"
                 , "Tot Won"
                 , "Tot Bet");
+        System.out.println("------");
         players.forEach(p -> p.info());
     }
 
     private void displayBets() {
+        System.out.format("%n%-20s %-7s %10s %n",
+                "Player"
+                , "Bet"
+                , "Amount");
+        System.out.println("------");
         bets.forEach(b -> b.info());
     }
 

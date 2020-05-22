@@ -46,7 +46,7 @@ public class Bet {
 
     public void info() {
         String beton = (betType == BetType.NUMBER) ? "" + numberBetOn : even ? "EVEN" : "ODD";
-        System.out.format("%-20s %7s %10s%n"
+        System.out.format("%-20s %-7s %10s%n"
                 , player.getName()
                 , beton
                 , amountBet);
