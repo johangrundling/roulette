@@ -62,20 +62,23 @@ public class Roulette {
 
     private void processSpin(final int number) {
         System.out.println("Number " + number);
-        System.out.format("%n%-20s %-7s %10s %10s %n",
-                "Player"
-                , "Bet"
-                , "Outcome"
-                , "Winnings");
-        System.out.println("------");
+        if (bets.isEmpty()) {
+            System.out.println("No were no bets this spin.");
+        } else {
+            System.out.format("%n%-20s %-7s %10s %10s %n",
+                    "Player"
+                    , "Bet"
+                    , "Outcome"
+                    , "Winnings");
+            System.out.println("------");
 
-        bets.forEach(b -> {
-            b.process(number);
-            b.receipt();
-        });
+            bets.forEach(b -> {
+                b.process(number);
+                b.receipt();
+            });
 
-        bets.clear();
-
+            bets.clear();
+        }
         displayPlayerInfo();
     }
 
@@ -162,6 +165,10 @@ public class Roulette {
     }
 
     private void displayPlayerInfo() {
+        if (players.isEmpty()) {
+            System.out.println("There are currently no players");
+            return;
+        }
         System.out.format("%n%-20s %-7s %10s %10s %n",
                 "Player"
                 , "Quick"
@@ -225,7 +232,7 @@ public class Roulette {
 
         if ((!NumberUtils.isDigits(betOn) || (NumberUtils.isDigits(betOn)
                 && (Integer.parseInt(betOn) < 1
-                    || Integer.parseInt(betOn) > 36)))
+                || Integer.parseInt(betOn) > 36)))
                 && !"even".equalsIgnoreCase(betOn)
                 && !"odd".equalsIgnoreCase(betOn)) {
             System.out.println("Invalid bet. Valid options: 1-36, even , odd");
@@ -234,7 +241,7 @@ public class Roulette {
 
         BigDecimal amount = currencyValidator.validate(betdata[2]);
 
-        if(Objects.isNull(amount) || !currencyValidator.isInRange(amount,0D,1000D)){
+        if (Objects.isNull(amount) || !currencyValidator.isInRange(amount, 0D, 1000D)) {
             System.out.println("Invalid bet. The 3rd value must be an amount between 0 and 1000.");
             return;
         }
@@ -249,10 +256,10 @@ public class Roulette {
         int numberBetOn = 0;
         boolean oddOrEven = false;
 
-        if(type == BetType.NUMBER){
+        if (type == BetType.NUMBER) {
             numberBetOn = NumberUtils.toInt(betOn);
-        }else{
-            oddOrEven = StringUtils.equalsIgnoreCase(betOn,"even");
+        } else {
+            oddOrEven = StringUtils.equalsIgnoreCase(betOn, "even");
         }
 
 
@@ -271,7 +278,7 @@ public class Roulette {
 
     public class Wheel implements Runnable {
 
-        private static final long SPIN_DELAY = 30*1000l;
+        private static final long SPIN_DELAY = 30 * 1000l;
 
         @lombok.SneakyThrows
         public void run() {
