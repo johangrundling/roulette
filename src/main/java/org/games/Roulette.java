@@ -112,7 +112,7 @@ public class Roulette {
         if (!StringUtils.isEmpty(playerName)
                 && StringUtils.isAlpha(StringUtils.substring(playerName,0,1))
                 && playerName.length() >= 3
-                && playerName.length() <= 30) {
+                && playerName.length() <= 20) {
             players.add(Player.builder()
                     .name(playerName)
                     .quickCode(PlayerQuickSearchCode.generateQuickCode())
