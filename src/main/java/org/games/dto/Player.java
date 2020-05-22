@@ -34,7 +34,11 @@ public class Player {
     }
 
     public void info() {
-        System.out.println(name + " " + quickCode + " " + totalAmountBet + " " + totalAmountWon);
+        System.out.format("%-20s %-7d %10s %10s %n"
+                , name
+                ,quickCode
+                ,totalAmountBet
+                ,totalAmountWon);
     }
 
 }

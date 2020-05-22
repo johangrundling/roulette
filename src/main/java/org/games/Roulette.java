@@ -28,13 +28,14 @@ public class Roulette {
         System.out.println("Starting roulette");
         displayOptions();
         loadPlayerInfo();
+        displayPlayerInfo();
         new Thread(this.new Wheel()).start();
     }
 
     public void play() {
         Scanner stdin = new Scanner(System.in);
         while (true) {
-            System.out.println(" Place your bet: ");
+            //System.out.println(" Place your bet: ");
             String input = stdin.nextLine();
 
             if (input.equalsIgnoreCase("x")) {
@@ -143,6 +144,11 @@ public class Roulette {
     }
 
     private void displayPlayerInfo() {
+        System.out.format("%-20s %-7s %10s %10s %n",
+                "Player"
+        ,"Quick"
+        ,"Tot Won"
+        ,"Tot Bet");
         players.forEach(p -> p.info());
     }
 
