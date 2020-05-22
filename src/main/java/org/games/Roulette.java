@@ -85,6 +85,9 @@ public class Roulette {
 
 
     private void shutdown() {
+        //this should really cater for existing bets before exiting.
+        //maybe if this ever gets productionized.
+        //beyond the scope of this exercise
         savePlayerInfo();
         System.exit(0);
     }
