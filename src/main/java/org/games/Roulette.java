@@ -34,7 +34,7 @@ public class Roulette {
     public void play() {
         Scanner stdin = new Scanner(System.in);
         while (true) {
-            System.out.println();
+            System.out.println(" Place your bet: ");
             String input = stdin.nextLine();
 
             if (input.equalsIgnoreCase("x")) {
@@ -170,8 +170,6 @@ public class Roulette {
         int index = players.indexOf(search);
         return index<0? null : players.get(index);
     }
-
-
 
     private void placeBet(String bet) {
         String[] betdata = bet.split(" ");
