@@ -3,6 +3,8 @@ package org.games;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.validator.routines.BigDecimalValidator;
+import org.apache.commons.validator.routines.CurrencyValidator;
 import org.games.csv.PlayerCSVRepository;
 import org.games.dto.Bet;
 import org.games.dto.BetType;
@@ -10,6 +12,7 @@ import org.games.dto.Player;
 import org.games.dto.PlayerQuickSearchCode;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -19,6 +22,8 @@ import java.util.Scanner;
 public class Roulette {
 
     private List<Player> players = new ArrayList<>();
+
+    private static BigDecimalValidator currencyValidator = BigDecimalValidator.getInstance();
 
     //this list should be synchronized but that is beyond the scope of this exercise
     private List<Bet> bets = new ArrayList<>();
@@ -121,14 +126,20 @@ public class Roulette {
         if (!StringUtils.isEmpty(playerName)
                 && StringUtils.isAlpha(StringUtils.substring(playerName, 0, 1))
                 && playerName.length() >= 3
-                && playerName.length() <= 20) {
+                && playerName.length() <= 20
+                && !playerName.equalsIgnoreCase("register")
+                && !playerName.equalsIgnoreCase("remove")
+                && !playerName.equalsIgnoreCase("bets")
+                && !playerName.equalsIgnoreCase("info")) {
             players.add(Player.builder()
                     .name(playerName)
                     .quickCode(PlayerQuickSearchCode.generateQuickCode())
                     .build());
-            System.out.println("player " + playerName + " successfully registered");
+            System.out.println("Player " + playerName + " successfully registered");
         } else {
-            System.out.println("The players name must start with a character and must be between 3 and 20 characters long.");
+            System.out.println("Players name must start with a character." +
+                    "\nPlayer name must be between 3 and 20 characters long." +
+                    "\nPlayer name can not be a menu option.");
         }
     }
 
@@ -222,12 +233,16 @@ public class Roulette {
             return;
         }
 
-        String amount = betdata[2];
+        BigDecimal amount = currencyValidator.validate(betdata[2]);
 
-        if(!NumberUtils.isCreatable(amount)){
-            System.out.println("Invalid bet. The 3rd value must be an amount");
+        if(Objects.isNull(amount) || !currencyValidator.isInRange(amount,0D,1000D)){
+            System.out.println("Invalid bet. The 3rd value must be an amount between 0 and 1000.");
             return;
         }
+
+        amount = amount.setScale(2, RoundingMode.FLOOR);
+
+        System.out.println(amount);
 
         BetType type = NumberUtils.isDigits(betOn) ? BetType.NUMBER
                 : BetType.ODD_EVEN;
@@ -246,7 +261,7 @@ public class Roulette {
                 .betType(type)
                 .numberBetOn(numberBetOn)
                 .even(oddOrEven)
-                .amountBet(NumberUtils.createBigDecimal(amount))
+                .amountBet(amount)
                 .build());
 
     }

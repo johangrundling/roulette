@@ -12,6 +12,7 @@
         <lombok.verion>1.18.12</lombok.verion>
         <commons-csv.verison>1.5</commons-csv.verison>
         <commons-lang3.verison>3.10</commons-lang3.verison>
+        <commons-validator.verison>1.6</commons-validator.verison>
     </properties>
 
     <dependencies>
@@ -30,6 +31,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-csv</artifactId>
             <version>${commons-csv.verison}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>${commons-validator.verison}</version>
         </dependency>
     </dependencies>
 
