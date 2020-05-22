@@ -4,7 +4,6 @@ import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.validator.routines.BigDecimalValidator;
-import org.apache.commons.validator.routines.CurrencyValidator;
 import org.games.csv.PlayerCSVRepository;
 import org.games.dto.Bet;
 import org.games.dto.BetType;
