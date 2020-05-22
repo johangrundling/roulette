@@ -109,14 +109,17 @@ public class Roulette {
             return;
         }
 
-        if (!StringUtils.isEmpty(playerName) && StringUtils.isAlpha(StringUtils.substring(playerName,0,1)) && playerName.length() >= 3) {
+        if (!StringUtils.isEmpty(playerName)
+                && StringUtils.isAlpha(StringUtils.substring(playerName,0,1))
+                && playerName.length() >= 3
+                && playerName.length() <= 30) {
             players.add(Player.builder()
                     .name(playerName)
                     .quickCode(PlayerQuickSearchCode.generateQuickCode())
                     .build());
             System.out.println("player "+ playerName+ " successfully registered");
         }else{
-            System.out.println("The players name must start with a character and must be at least 3 characters long.");
+            System.out.println("The players name must start with a character and must be between 3 and 20 characters long.");
         }
     }
 
