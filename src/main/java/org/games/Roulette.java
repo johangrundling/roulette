@@ -24,6 +24,7 @@ public class Roulette {
 
     public Roulette() {
         System.out.println("Starting roulette");
+        displayOptions();
         loadPlayerInfo();
         new Thread(this.new Wheel()).start();
     }
@@ -35,7 +36,9 @@ public class Roulette {
 
             if (input.equalsIgnoreCase("x")) {
                 shutdown();
-            } else if (StringUtils.startsWith(input, "register")) {
+            } else if (input.equalsIgnoreCase("m")) {
+                displayOptions();
+            }else if (StringUtils.startsWith(input, "register")) {
                 registerPlayer(input);
             } else if (StringUtils.startsWith(input, "remove")) {
                 removePlayer(input);
@@ -59,6 +62,18 @@ public class Roulette {
 
         bets.clear();
     }
+
+    private void displayOptions() {
+        StringBuilder options = new StringBuilder();
+        options.append("menu options")
+                .append("\nx - exits program and write players list to file")
+                .append("\nm - display options")
+                .append("\nregister")
+                .append("\nremove")
+                .append("");
+        System.out.println(options.toString());
+    }
+
 
     private void shutdown() {
         savePlayerInfo();
