@@ -32,6 +32,7 @@ public class Roulette {
     public void play() {
         Scanner stdin = new Scanner(System.in);
         while (true) {
+            System.out.println();
             String input = stdin.nextLine();
 
             if (input.equalsIgnoreCase("x")) {
@@ -68,8 +69,14 @@ public class Roulette {
         options.append("menu options")
                 .append("\nx - exits program and write players list to file")
                 .append("\nm - display options")
-                .append("\nregister")
-                .append("\nremove")
+                .append("\nregister - Register a new player. Must start with character. Spaces are replaces by _")
+                .append("\n      usage: register <player name> .")
+                .append("\n      exmaple: register johan gamble . Registers player johan_gamble")
+                .append("\nremove - removes a player from the list")
+                .append("\n      usage: remove <player name> .")
+                .append("\n      exmaple: remove johan gamble . Removes player johan_gamble")
+                .append("\ninfo - display player list")
+                .append("\nbets - display current bets")
                 .append("");
         System.out.println(options.toString());
     }
@@ -89,16 +96,21 @@ public class Roulette {
     }
 
     private void registerPlayer(String playerInfo) {
+
         String playerName = StringUtils.replace(
                 StringUtils.trim(StringUtils.removeStart(playerInfo, "register")),
                 " ",
                 "_"
         );
-        if (!StringUtils.isEmpty(playerName)) {
+
+        if (!StringUtils.isEmpty(playerName) && StringUtils.isAlpha(StringUtils.substring(playerName,0,1)) && playerName.length() >= 3) {
             players.add(Player.builder()
                     .name(playerName)
                     .quickCode(PlayerQuickSearchCode.generateQuickCode())
                     .build());
+            System.out.println("player "+ playerName+ " successfully registered");
+        }else{
+            System.out.println("The players name must start with a character and must be at least 3 characters long.");
         }
     }
 
